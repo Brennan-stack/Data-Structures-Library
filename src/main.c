@@ -1,4 +1,5 @@
 #include "../include/singly_linked_list.c"
+#include "../include/stack.c"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -8,8 +9,28 @@ struct my_test {
     int data;
 };
 
+struct stack s;
+struct my_stack_entry {
+    struct stack_elem elem;
+    int data;
+};
+
 int main()
 {
+    stack_init(&s);
+
+    struct my_stack_entry *stack_entry1 = malloc(sizeof(struct my_stack_entry));
+    stack_entry1->data = 14;
+    stack_push(&s, &stack_entry1->elem);
+
+    struct my_stack_entry *stack_entry2 = malloc(sizeof(struct my_stack_entry));
+    stack_entry2->data = 15;
+    stack_push(&s, &stack_entry2->elem);
+    printf("Stack Peek: %d\n", stack_entry(stack_peek(&s), struct my_stack_entry, elem)->data);
+    printf("Stack Pop: %d\n", stack_entry(stack_pop(&s), struct my_stack_entry, elem)->data);
+    printf("Stack Peek: %d\n", stack_entry(stack_peek(&s), struct my_stack_entry, elem)->data);
+    printf("Stack Pop: %d\n", stack_entry(stack_pop(&s), struct my_stack_entry, elem)->data);
+    printf("Stack Pop: %d\n", stack_entry(stack_pop(&s), struct my_stack_entry, elem) == NULL); //check null
     singly_linked_list_init(&list);
     struct my_test *test = malloc(sizeof(struct my_test));
     test->data = 44;
