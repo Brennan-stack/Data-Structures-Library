@@ -53,6 +53,8 @@ struct stack_elem {
 */
 struct stack {
     struct stack_elem top;
+    unsigned long size;
+    long max_size;
 };
 
 /*
@@ -69,14 +71,25 @@ struct stack {
                     - offsetof(STRUCT, MEMBER.next)))
 
 /*
-*   This function initializes a stack to have no entries.
+*   This function initializes a stack to have no entries and variable size.
 *
 *   @param stack - a stack struct you wish to initialize.    
 *
 *   @author Brennan Hurst
 *   @version 10/05/2021
 */
-void stack_init(struct stack *stack);
+void stack_init_variable_size(struct stack *stack);
+
+/*
+*   This function initializes a stack to have no entries and a fixed size.
+*
+*   @param stack - a stack struct you wish to initialize.
+*   @param max_size - unsigned long representing maximum number of entries.
+*
+*   @author Brennan Hurst
+*   @version 10/05/2021
+*/
+void stack_init_fixed_size(struct stack *stack, unsigned long max_size);
 
 /*
 *   This function inserts a new stack element at the top of the stack.
@@ -84,10 +97,12 @@ void stack_init(struct stack *stack);
 *   @param stack - the stack struct you wish to manipulate 
 *   @param stack_elem - a stack_elem* you want to insert into the stack.
 *
+*   @returns 0 if successfully pushed, -1 if unsuccessful push.
+*
 *   @author Brennan Hurst
 *   @version 10/05/2021
 */
-void stack_push(struct stack *stack, struct stack_elem *stack_elem);
+int stack_push(struct stack *stack, struct stack_elem *stack_elem);
 
 /*
 *   This function removes the top element in the stack and returns a pointer
@@ -109,5 +124,29 @@ struct stack_elem* stack_pop(struct stack *stack);
 *   @returns stack_elem* if peek is successful, NULL if peek is not successful
 */
 struct stack_elem* stack_peek(struct stack *stack);
+
+/*
+*   This function returns the size of the stack.
+*
+*   @param stack - the stack struct you wish to know the size of.
+*   @returns unsigned long representing the number of entries. 
+*/
+unsigned long stack_size(struct stack *stack);
+
+/*
+*   This function returns whether the stack is empty or not.
+*
+*   @param stack - the stack struct you wish to inquire about.
+*   @returns 1 if empty, 0 if not empty.
+*/
+int stack_is_empty(struct stack *stack);
+
+/*
+*   This funciton returns whether the stack is full or not.
+*
+*   @param stack - the stack struct you wish to inquire about.
+*   @returns 1 if full, 0 if not full.
+*/
+int stack_is_full(struct stack *stack);
 
 #endif

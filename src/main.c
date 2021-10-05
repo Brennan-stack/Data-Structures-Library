@@ -17,20 +17,25 @@ struct my_stack_entry {
 
 int main()
 {
-    stack_init(&s);
+    stack_init_fixed_size(&s, 2);
 
     struct my_stack_entry *stack_entry1 = malloc(sizeof(struct my_stack_entry));
     stack_entry1->data = 14;
-    stack_push(&s, &stack_entry1->elem);
+    printf("Stack Push: %d\n", stack_push(&s, &stack_entry1->elem));
 
     struct my_stack_entry *stack_entry2 = malloc(sizeof(struct my_stack_entry));
     stack_entry2->data = 15;
-    stack_push(&s, &stack_entry2->elem);
+    printf("Stack Push: %d\n", stack_push(&s, &stack_entry2->elem));
+    printf("Stack is Full: %d\n", stack_is_full(&s));
+    printf("Stack is Empty: %d\n", stack_is_empty(&s));
+    printf("Stack Size: %ld\n", stack_size(&s));
     printf("Stack Peek: %d\n", stack_entry(stack_peek(&s), struct my_stack_entry, elem)->data);
     printf("Stack Pop: %d\n", stack_entry(stack_pop(&s), struct my_stack_entry, elem)->data);
     printf("Stack Peek: %d\n", stack_entry(stack_peek(&s), struct my_stack_entry, elem)->data);
     printf("Stack Pop: %d\n", stack_entry(stack_pop(&s), struct my_stack_entry, elem)->data);
-    printf("Stack Pop: %d\n", stack_entry(stack_pop(&s), struct my_stack_entry, elem) == NULL); //check null
+    printf("Stack is Full: %d\n", stack_is_full(&s));
+    printf("Stack is Empty: %d\n", stack_is_empty(&s));
+    printf("Stack Size: %ld\n", stack_size(&s));
     singly_linked_list_init(&list);
     struct my_test *test = malloc(sizeof(struct my_test));
     test->data = 44;
